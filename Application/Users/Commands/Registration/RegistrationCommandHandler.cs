@@ -10,12 +10,14 @@ public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, G
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
+    private readonly IEmailService _emailService;
 
-    public RegistrationCommandHandler(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordService passwordService)
+    public RegistrationCommandHandler(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordService passwordService, IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
         _passwordService = passwordService;
+        _emailService = emailService;
     }
 
     public async Task<Guid> Handle(RegistrationCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,9 @@ public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, G
             passwordHash,
             passwordSalt,
             false);
+
+        // Sending a message with a registration confirmation code
+        await _emailService.SendEmailConfirmationAsync(user.Email);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
