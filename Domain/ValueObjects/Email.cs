@@ -1,4 +1,5 @@
-﻿using Domain.Primitives;
+﻿using System.ComponentModel;
+using Domain.Primitives;
 
 namespace Domain.ValueObjects;
 
