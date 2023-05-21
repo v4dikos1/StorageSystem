@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Validation\" />
     <Folder Include="Files\Commands\" />
     <Folder Include="Files\Queries\" />
     <Folder Include="Users\Queries\" />
