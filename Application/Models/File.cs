@@ -20,6 +20,8 @@ public class File : IMapWith<Domain.Entities.File>
     public required Guid OwnerId { get; set; }
     public User Owner { get; set; } = null!;
 
+    public bool ToAutoDelete { get; set; } = false;
+
     public void Mapping(Profile profile)
     {
         profile.CreateMap<File, Domain.Entities.File>();
