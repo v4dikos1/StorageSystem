@@ -17,6 +17,7 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
         builder.Property(f => f.CreatedAt).IsRequired();
         builder.Property(f => f.ToAutoDelete).IsRequired().HasDefaultValue("false");
         builder.Property(f => f.Path).IsRequired();
+        builder.Property(f => f.Description).IsRequired().HasDefaultValue("");
 
         builder
             .HasOne<User>(f => f.Owner)
