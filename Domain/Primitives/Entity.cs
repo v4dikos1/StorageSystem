@@ -3,7 +3,7 @@
 /// <summary>
 /// A base class for all entities
 /// </summary>
-internal abstract class Entity : IEquatable<Entity>
+public abstract class Entity : IEquatable<Entity>
 {
     protected Entity(Guid id)
     {
