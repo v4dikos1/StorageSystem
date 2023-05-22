@@ -2,6 +2,9 @@
 
 namespace Domain.ValueObjects;
 
+/// <summary>
+/// Email value object
+/// </summary>
 public class Email : ValueObject
 {
     public Email(string value)
@@ -20,6 +23,11 @@ public class Email : ValueObject
         yield return Value;
     }
 
+    /// <summary>
+    /// A method for checking email validity
+    /// </summary>
+    /// <param name="email">Email string</param>
+    /// <returns>true if email is valid</returns>
     bool IsValidEmail(string email)
     {
         var trimmedEmail = email.Trim();

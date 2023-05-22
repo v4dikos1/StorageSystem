@@ -2,9 +2,19 @@
 
 namespace Domain.ValueObjects;
 
+/// <summary>
+/// Filename value object
+/// </summary>
 public class Filename : ValueObject
 {
+    /// <summary>
+    /// Maximum filename length
+    /// </summary>
     public static readonly int MaxLength = 20;
+
+    /// <summary>
+    /// Default filename value
+    /// </summary>
     public static readonly string DefaultValue = "New file";
 
     public Filename(string value)

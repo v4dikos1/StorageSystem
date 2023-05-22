@@ -4,7 +4,9 @@ using Domain.ValueObjects;
 namespace Domain.Entities;
 
 /// <summary>
-/// The entity of the user of the system. 
+/// A file entity created to encapsulate the business logic associated with users.
+/// However, in this case, it does not contain any logic and is only used for now to save the architecture style
+/// and the possibility to disperse/use it in the future. 
 /// </summary>
 public class User : Entity
 {
@@ -16,15 +18,18 @@ public class User : Entity
         Email = email;
     }
 
+    /// <summary>
+    /// Username
+    /// </summary>
     public Username Username { get; set; }
+
+    /// <summary>
+    /// Email
+    /// </summary>
     public Email Email { get; init; }
 
+    /// <summary>
+    /// Uploaded files
+    /// </summary>
     public IReadOnlyCollection<File> Files => _files;
-
-    public void AddFile(string name, string description)
-    {
-        var file = File.Create(name, description, Id);
-        _files.Add(file);
-    }
-
 }

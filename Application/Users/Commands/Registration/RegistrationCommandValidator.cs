@@ -2,7 +2,7 @@
 
 namespace Application.Users.Commands.Registration;
 
-public class RegistrationCommandValidator : AbstractValidator<RegistrationCommand>
+internal class RegistrationCommandValidator : AbstractValidator<RegistrationCommand>
 {
     public RegistrationCommandValidator()
     {

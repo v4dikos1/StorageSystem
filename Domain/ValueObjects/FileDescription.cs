@@ -2,9 +2,19 @@
 
 namespace Domain.ValueObjects;
 
+/// <summary>
+/// File description value object
+/// </summary>
 public class FileDescription : ValueObject
 {
-    public static readonly int MaxLength = 20;
+    /// <summary>
+    /// Maximum description length
+    /// </summary>
+    public static readonly int MaxLength = 200;
+
+    /// <summary>
+    /// Default description value
+    /// </summary>
     public static readonly string DefaultValue = "";
 
     public FileDescription(string value)
