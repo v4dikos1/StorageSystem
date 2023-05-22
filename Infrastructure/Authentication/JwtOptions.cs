@@ -1,5 +1,9 @@
 ﻿namespace Infrastructure.Authentication;
 
+/// <summary>
+/// Model for storing jwt options.
+/// Properties are initialized in the appsetting.json file or elsewhere.
+/// </summary>
 public class JwtOptions
 {
     public string Issuer { get; init; }

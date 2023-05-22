@@ -7,6 +7,9 @@ namespace Infrastructure;
 
 public static class DependencyInjection
 {
+    /// <summary>
+    /// An extension method for implementing dependencies in the Infrastructure layer
+    /// </summary>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddSingleton<IPasswordService, PasswordService>();
