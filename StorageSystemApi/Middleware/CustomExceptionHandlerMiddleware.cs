@@ -2,6 +2,8 @@
 using System.Net;
 using System.Text.Json;
 using FluentValidation;
+using System.Security.Authentication;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StorageSystemApi.Middleware;
 
@@ -51,6 +53,14 @@ public class CustomExceptionHandlerMiddleware
 
             case InvalidLoginOrPasswordException:
                 code = HttpStatusCode.Unauthorized;
+                break;
+
+            case InvalidCredentialException:
+                code = HttpStatusCode.BadRequest;
+                break;
+
+            case SecurityTokenException:
+                code = HttpStatusCode.BadRequest;
                 break;
         }
 

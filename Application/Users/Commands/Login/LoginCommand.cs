@@ -8,4 +8,4 @@ namespace Application.Users.Commands.Login;
 /// <param name="Email">User email</param>
 /// <param name="Password">User password</param>
 /// <returns>token</returns>
-public record LoginCommand(string Email,  string Password) : IRequest<string> {}
+public record LoginCommand(string Email,  string Password) : IRequest<LoginResponseVm> {}
