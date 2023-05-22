@@ -1,5 +1,7 @@
 ﻿using Application.Users.Commands.Login;
+using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Registration;
+using Application.Users.Commands.RevokeToken;
 using Application.Users.Queries.GetUserProfile;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,9 @@ public static class ValidationBehaviorDependencyInjection
         services.AddScoped<IValidator<RegistrationCommand>, RegistrationCommandValidator>();
         services.AddScoped<IValidator<LoginCommand>, LoginCommandValidator>();
         services.AddScoped<IValidator<GetUserProfileQuery>, GetUserProfileQueryValidator>();
+
+        services.AddScoped<IValidator<RefreshTokenCommand>, RefreshTokenCommandValidator>();
+        services.AddScoped<IValidator<RevokeTokenCommand>, RevokeTokenCommandValidator>();
 
         return services;
     }

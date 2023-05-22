@@ -19,6 +19,9 @@ public class User : IMapWith<Domain.Entities.User>
 
     public List<File> UploadedFiles { get; set; } = new List<File>();
 
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiryTime { get; set; }
+
     public void Mapping(Profile profile)
     {
         profile.CreateMap<User, Domain.Entities.User>();

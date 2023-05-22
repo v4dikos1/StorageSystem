@@ -3,7 +3,6 @@ using Application.Users.Commands.Registration;
 using Application.Users.Queries.GetUserProfile;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StorageSystemApi.Models.UserModels;
 
@@ -64,7 +63,7 @@ public class UserController : ControllerBase
     /// }
     /// </remarks>
     /// <param name="request">Login (email) and Password</param>
-    /// <returns>Returns jwt-token</returns>
+    /// <returns>Returns access-token</returns>
     /// <response code="200">Authorized</response>
     /// <response code="401">Not authorized</response>
     /// <response code="404">User not found</response>
@@ -95,7 +94,6 @@ public class UserController : ControllerBase
     /// <response code="200">User found</response>
     /// <response code="404">User not found</response>
     [HttpGet("{id}", Name = "GetUser")]
-    [Authorize]
     [ProducesResponseType(typeof(UserProfileVm), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserProfileVm>> GetUser(Guid id)

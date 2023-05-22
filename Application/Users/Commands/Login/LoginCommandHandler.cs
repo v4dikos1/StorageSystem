@@ -1,30 +1,34 @@
-﻿using Application.Common.Abstractions;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Application.Common.Abstractions;
 using Application.Common.Exceptions;
 using Application.Models;
 using FluentValidation;
 using MediatR;
+using System.Security.Claims;
 
 namespace Application.Users.Commands.Login;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseVm>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
     private readonly ITokenService _tokenService;
     private readonly IValidator<LoginCommand> _validator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public LoginCommandHandler(IUserRepository userRepository,
         IPasswordService passwordService,
         ITokenService tokenService,
-        IValidator<LoginCommand> validator)
+        IValidator<LoginCommand> validator, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _passwordService = passwordService;
         _tokenService = tokenService;
         _validator = validator;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginResponseVm> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         // Validating data in the command
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
@@ -48,9 +52,25 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
             throw new InvalidLoginOrPasswordException();
         }
 
-        // Generating jwt-token
-        var token = _tokenService.Create(user);
+        // Creating user claims (email, id) 
+        var claims = new Claim[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email)
+        };
 
-        return token;
+        // Generating access token
+        var accessToken = _tokenService.Create(claims);
+
+        // Generating refresh token
+        var refreshToken = _tokenService.CreateRefreshToken();
+
+        // Updating refresh token
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return new LoginResponseVm(accessToken, refreshToken);
     }
 }
