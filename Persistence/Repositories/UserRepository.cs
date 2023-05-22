@@ -33,6 +33,12 @@ public sealed class UserRepository : IUserRepository
     public async Task<User> UpdateUsernameAsync(Guid userId, string username, CancellationToken cancellationToken)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
+
         user.Username = username;
 
         return user;
@@ -41,6 +47,12 @@ public sealed class UserRepository : IUserRepository
     public async Task<User> UpdateEmailAsync(Guid userId, string email, CancellationToken cancellationToken)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
+
         user.Email = email;
 
         return user;
@@ -49,6 +61,11 @@ public sealed class UserRepository : IUserRepository
     public async Task<User> UpdatePasswordAsync(Guid userId, byte[] passwordHash, byte[] passwordSalt, CancellationToken cancellationToken)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
 
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
@@ -60,6 +77,11 @@ public sealed class UserRepository : IUserRepository
         bool isEmailConfirmed, CancellationToken cancellationToken)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
 
         user.Username = username;
         user.Email = email;
@@ -73,6 +95,12 @@ public sealed class UserRepository : IUserRepository
     public async Task<User> ConfirmEmailAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
+
         user.IsEmailConfirmed = true;
 
         return user;
@@ -81,6 +109,11 @@ public sealed class UserRepository : IUserRepository
     public async Task<bool> DeleteUser(Guid userId, CancellationToken cancellationToken)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
 
         _context.Users.Remove(user);
 
@@ -97,26 +130,16 @@ public sealed class UserRepository : IUserRepository
         return users;
     }
 
-    public async Task<User> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<User?> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken)
     {
         User? user = await _context.Users.FindAsync(userId, cancellationToken);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
 
         return user;
     }
 
-    public async Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+    public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
         User? user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), email);
-        }
 
         return user;
     }
