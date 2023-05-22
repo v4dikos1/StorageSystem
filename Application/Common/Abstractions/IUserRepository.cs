@@ -16,6 +16,6 @@ public interface IUserRepository
     public Task<bool> DeleteUser (Guid userId, CancellationToken cancellationToken);
 
     public Task<List<User>> GetUsersAsync(int offset, int limit, CancellationToken cancellationToken);
-    public Task<User> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken);
-    public Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
+    public Task<User?> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken);
+    public Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
 }
