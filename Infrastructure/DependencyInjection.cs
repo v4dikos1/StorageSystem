@@ -14,7 +14,7 @@ public static class DependencyInjection
     {
         services.AddSingleton<IPasswordService, PasswordService>();
         services.AddScoped<IEmailService, EmailService>();
-        services.AddTransient<ITokenService, TokenService>();
+        services.AddSingleton<ITokenService, TokenService>();
 
         return services;
     }

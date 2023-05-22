@@ -40,10 +40,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
+builder.Services.AddValidation();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure();
-builder.Services.AddValidation();
 
 builder.Services.AddCors(options =>
 {
@@ -97,9 +97,6 @@ app.UseAuthorization();
 
 app.UseApiVersioning();
 
-app.UseEndpoints(endpoints =>
-{
-    app.MapControllers();
-});
+app.MapControllers();
 
 app.Run();

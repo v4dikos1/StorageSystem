@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.Registration;
+﻿using Application.Users.Commands.Login;
+using Application.Users.Commands.Registration;
 using Application.Users.Queries.GetUserProfile;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +13,9 @@ public static class ValidationBehaviorDependencyInjection
     /// </summary>
     public static IServiceCollection AddValidation(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining(typeof(RegistrationCommandValidator));
-        services.AddValidatorsFromAssemblyContaining(typeof(GetUserProfileQueryValidator));
+        services.AddScoped<IValidator<RegistrationCommand>, RegistrationCommandValidator>();
+        services.AddScoped<IValidator<LoginCommand>, LoginCommandValidator>();
+        services.AddScoped<IValidator<GetUserProfileQuery>, GetUserProfileQueryValidator>();
 
         return services;
     }
