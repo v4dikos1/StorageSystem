@@ -11,6 +11,6 @@ public class VerificationService : IVerificationService
     /// <returns></returns>
     public string CreateVerificationToken()
     {
-        return Convert.ToHexString(RandomNumberGenerator.GetBytes(6));
+        return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
     }
 }

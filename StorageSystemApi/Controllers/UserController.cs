@@ -112,17 +112,17 @@ public class UserController : ControllerBase
     /// <summary>
     /// Verify the email
     /// </summary>
-    /// <param name="verificationCode">Code sent in the mail</param>
+    /// <param name="verificationToken">Token sent in the email</param>
     /// <returns></returns>
     /// <response code="204">Email verified</response>
     /// <resposne code="400">Incorrect code</resposne>
-    [HttpPatch]
+    [HttpGet]
     [Route("verify")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> VerifyEmail(string verificationCode)
+    public async Task<ActionResult> VerifyEmail(string verificationToken)
     {
-        var command = new ConfirmEmailCommand(verificationCode);
+        var command = new ConfirmEmailCommand(verificationToken);
 
         await _mediator.Send(command);
 

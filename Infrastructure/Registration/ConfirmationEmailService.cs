@@ -27,7 +27,7 @@ internal class ConfirmationEmailService : IEmailService
         emailMessage.Subject = subject;
         emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
         {
-            Text = $"Enter the following code to confirm registration: {message}"
+            Text = $"Follow this link to confirm your mail: {_emailOptions.ConfirmUrl}{message}"
         };
 
         using (var client = new SmtpClient())

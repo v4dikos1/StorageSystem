@@ -5,6 +5,8 @@
 /// </summary>
 public class EmailOptions
 {
+    public required string ConfirmUrl { get; init; }
+
     public required string SenderName { get; init; }
     public required string SenderEmail { get; init; }
 
