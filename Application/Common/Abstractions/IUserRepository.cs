@@ -11,7 +11,7 @@ public interface IUserRepository
     public Task<User> UpdatePasswordAsync(Guid userId, byte[] passwordHash, byte[] passwordSalt, CancellationToken cancellationToken);
     public Task<User> UpdateUserAsync(Guid userId, string username, string email, byte[] passwordHash,
         byte[] passwordSalt, bool isEmailConfirmed, CancellationToken cancellationToken);
-    public Task<User> ConfirmEmailAsync(Guid userId, CancellationToken cancellationToken);
+    public Task<User> ConfirmEmailAsync(string verificationToken, CancellationToken cancellationToken);
 
     public Task<bool> DeleteUser (Guid userId, CancellationToken cancellationToken);
 

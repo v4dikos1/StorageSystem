@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.Login;
+﻿using Application.Users.Commands.ConfirmEmail;
+using Application.Users.Commands.Login;
 using Application.Users.Commands.Registration;
 using Application.Users.Queries.GetUserProfile;
 using AutoMapper;
@@ -66,10 +67,12 @@ public class UserController : ControllerBase
     /// <returns>Returns access-token</returns>
     /// <response code="200">Authorized</response>
     /// <response code="401">Not authorized</response>
+    /// <response code="403">Need to confirm the email</response>
     /// <response code="404">User not found</response>
     [HttpPost("user")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<string>> Auth([FromBody] UserLoginDto request)
     {
@@ -103,5 +106,26 @@ public class UserController : ControllerBase
         var response = await _mediator.Send(query);
 
         return Ok(response);
+    }
+
+
+    /// <summary>
+    /// Verify the email
+    /// </summary>
+    /// <param name="verificationCode">Code sent in the mail</param>
+    /// <returns></returns>
+    /// <response code="204">Email verified</response>
+    /// <resposne code="400">Incorrect code</resposne>
+    [HttpPatch]
+    [Route("verify")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> VerifyEmail(string verificationCode)
+    {
+        var command = new ConfirmEmailCommand(verificationCode);
+
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 }

@@ -92,13 +92,14 @@ public sealed class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> ConfirmEmailAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<User> ConfirmEmailAsync(string verificationToken, CancellationToken cancellationToken)
     {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.VerificationToken == verificationToken, cancellationToken);
 
         if (user is null)
         {
-            throw new NotFoundException(nameof(User), userId);
+            throw new WrongConfirmationCodeException();
         }
 
         user.IsEmailConfirmed = true;

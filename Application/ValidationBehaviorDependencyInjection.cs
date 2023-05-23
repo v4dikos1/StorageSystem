@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.Login;
+﻿using Application.Users.Commands.ConfirmEmail;
+using Application.Users.Commands.Login;
 using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Registration;
 using Application.Users.Commands.RevokeToken;
@@ -21,6 +22,8 @@ public static class ValidationBehaviorDependencyInjection
 
         services.AddScoped<IValidator<RefreshTokenCommand>, RefreshTokenCommandValidator>();
         services.AddScoped<IValidator<RevokeTokenCommand>, RevokeTokenCommandValidator>();
+
+        services.AddScoped<IValidator<ConfirmEmailCommand>, ConfirmEmailCommandValidator>();
 
         return services;
     }

@@ -46,6 +46,12 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseVm
             throw new NotFoundException(nameof(User), request.Email);
         }
 
+        // Checking if the email confirmed
+        if (!user.IsEmailConfirmed)
+        {
+            throw new EmailConfirmationRequiredException();
+        }
+
         // Checking if the password is the same as the one stored in the database
         if (!_passwordService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
         {

@@ -14,6 +14,7 @@ public class User : IMapWith<Domain.Entities.User>
     public required byte[] PasswordSalt { get; set; }
 
     public bool IsEmailConfirmed { get; set; } = false;
+    public string? VerificationToken { get; set; }
 
     public required DateTime RegisteredAt { get; set; }
 

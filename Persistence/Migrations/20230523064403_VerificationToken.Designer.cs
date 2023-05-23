@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence;
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(StorageServiceDbContext))]
-    partial class StorageServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523064403_VerificationToken")]
+    partial class VerificationToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,9 +108,6 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.HasIndex("Username");
-
-                    b.HasIndex("VerificationToken")
-                        .IsUnique();
 
                     b.ToTable("User", (string)null);
                 });

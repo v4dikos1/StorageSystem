@@ -62,6 +62,14 @@ public class CustomExceptionHandlerMiddleware
             case SecurityTokenException:
                 code = HttpStatusCode.BadRequest;
                 break;
+
+            case EmailConfirmationRequiredException:
+                code = HttpStatusCode.Forbidden;
+                break;
+
+            case WrongConfirmationCodeException:
+                code = HttpStatusCode.BadRequest;
+                break;
         }
 
         context.Response.ContentType = "application/json";

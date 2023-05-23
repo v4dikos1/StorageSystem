@@ -13,6 +13,7 @@ public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, G
     private readonly IPasswordService _passwordService;
     private readonly IEmailService _emailService;
     private readonly IValidator<RegistrationCommand> _validator;
+    private readonly IVerificationService _verificationService;
 
 
     public RegistrationCommandHandler(
@@ -20,13 +21,14 @@ public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, G
         IUserRepository userRepository,
         IPasswordService passwordService,
         IEmailService emailService,
-        IValidator<RegistrationCommand> validator)
+        IValidator<RegistrationCommand> validator, IVerificationService verificationService)
     {
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
         _passwordService = passwordService;
         _emailService = emailService;
         _validator = validator;
+        _verificationService = verificationService;
     }
 
     public async Task<Guid> Handle(RegistrationCommand request, CancellationToken cancellationToken)
@@ -55,8 +57,12 @@ public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, G
             passwordSalt,
             false);
 
-        // Sending a message with a registration confirmation code
-        await _emailService.SendEmailConfirmationAsync(user.Email);
+        // Creating verification token
+        var verificationToken = _verificationService.CreateVerificationToken();
+        user.VerificationToken = verificationToken;
+
+        // Sending a message with a verification token
+        await _emailService.SendEmailAsync(user.Email, "Confirm your email", verificationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
