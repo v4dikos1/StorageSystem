@@ -40,6 +40,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
+builder.Services.ConfigureOptions<EmailOptionsSetup>();
+
 builder.Services.AddValidation();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);

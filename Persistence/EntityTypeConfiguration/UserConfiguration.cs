@@ -25,6 +25,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.IsEmailConfirmed).IsRequired();
         builder.Property(u => u.RegisteredAt).IsRequired();
 
+        builder.HasIndex(u => u.VerificationToken).IsUnique();
+
         builder.HasMany<File>(u => u.UploadedFiles)
             .WithOne(f => f.Owner);
     }

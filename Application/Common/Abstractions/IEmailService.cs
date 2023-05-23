@@ -5,5 +5,5 @@
 /// </summary>
 public interface IEmailService
 {
-    Task SendEmailConfirmationAsync(string receiverEmail);
+    Task SendEmailAsync(string receiverEmail, string subject, string message);
 }
