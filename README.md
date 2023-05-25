@@ -25,7 +25,7 @@ To install the application, clone the git repository.
 After cloning the repository, you will need to configure the appsetting.json file.
 
 ### The structure of appsettings.json:
-
+```json
 {
   "ConnectionStrings": {
       "DbConnection": "your_npgsql_connection_string"
@@ -54,7 +54,7 @@ After cloning the repository, you will need to configure the appsetting.json fil
   },
   "AllowedHosts": "*"
 }
-
+```
 The **ConnectionStrings** section defines the database connection string.
 The **jwt** section defines the settings for the jwt-token.
 The **EmailOptions** section defines the settings for sending emails.
