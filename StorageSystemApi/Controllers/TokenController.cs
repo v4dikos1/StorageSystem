@@ -12,7 +12,7 @@ using StorageSystemApi.Models.TokenModels;
 namespace StorageSystemApi.Controllers;
 
 [ApiController]
-[Route("token/{version:apiVersion}")]
+[Route("api/{version:apiVersion}/token")]
 public class TokenController : ControllerBase
 {
     private readonly IMediator _mediator;
