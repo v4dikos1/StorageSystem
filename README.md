@@ -56,19 +56,23 @@ After cloning the repository, you will need to configure the appsetting.json fil
 }
 ```
 The **ConnectionStrings** section defines the database connection string.
+<br>
 The **jwt** section defines the settings for the jwt-token.
+<br>
 The **EmailOptions** section defines the settings for sending emails.
+<br>
 The **s3StorageOptions** and **Aws** sections define the settings for s3 storage.
 
 ## Aws credentials
 **Credentials** for the aws service are stored at: 
-```
 - credentials.txt file:
+```
   [default]
   aws_access_key_id=<<your_access_key_id>>
   aws_secret_access_key=<<your_secret_access_key>>
-
+```
 - config.txt file:
+```
   [default]
   region=ru-central1
 ```
