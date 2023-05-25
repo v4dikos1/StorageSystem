@@ -71,7 +71,8 @@ The **s3StorageOptions** and **Aws** sections define the settings for s3 storage
 - config.txt file:
   [default]
   region=ru-central1
-
+```
 To pull a docker image, run the following command:
-...
+```
+docker pull ...
 ```
