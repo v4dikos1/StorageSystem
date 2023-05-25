@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Persistence;
+using StorageSystemApi.Hubs;
 using StorageSystemApi.Middleware;
 using StorageSystemApi.OptionsSetup;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -42,6 +43,8 @@ builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
 builder.Services.ConfigureOptions<EmailOptionsSetup>();
 
+builder.Services.ConfigureOptions<StorageOptionsSetup>();
+
 builder.Services.AddValidation();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
@@ -66,6 +69,9 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
     );
+
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -99,6 +105,10 @@ app.UseAuthorization();
 
 app.UseApiVersioning();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    app.MapControllers();
+    app.MapHub<FileHub>("/fileHub");
+});
 
 app.Run();
