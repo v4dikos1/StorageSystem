@@ -28,7 +28,7 @@ After cloning the repository, you will need to configure the appsetting.json fil
 
 {
   "ConnectionStrings": {
-    "DbConnection": "your_npgsql_connection_string"
+      "DbConnection": "your_npgsql_connection_string"
   },
   "Jwt": {
     "Issuer": "issuer",
