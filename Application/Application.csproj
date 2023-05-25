@@ -8,13 +8,10 @@
 
   <ItemGroup>
     <Compile Remove="Common\Validation\**" />
-    <Compile Remove="Files\**" />
     <Compile Remove="Users\Commands\UpdateLogin\**" />
     <EmbeddedResource Remove="Common\Validation\**" />
-    <EmbeddedResource Remove="Files\**" />
     <EmbeddedResource Remove="Users\Commands\UpdateLogin\**" />
     <None Remove="Common\Validation\**" />
-    <None Remove="Files\**" />
     <None Remove="Users\Commands\UpdateLogin\**" />
   </ItemGroup>
 
