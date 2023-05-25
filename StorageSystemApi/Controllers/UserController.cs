@@ -108,7 +108,6 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-
     /// <summary>
     /// Verify the email
     /// </summary>

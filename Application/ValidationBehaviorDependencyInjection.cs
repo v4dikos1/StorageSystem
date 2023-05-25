@@ -1,4 +1,9 @@
-﻿using Application.Users.Commands.ConfirmEmail;
+﻿using Application.Files.Commands.DeleteFile;
+using Application.Files.Commands.UploadFile;
+using Application.Files.Queries.GetFile;
+using Application.Files.Queries.GetFileInfo;
+using Application.Files.Queries.GetFileMarks;
+using Application.Users.Commands.ConfirmEmail;
 using Application.Users.Commands.Login;
 using Application.Users.Commands.RefreshToken;
 using Application.Users.Commands.Registration;
@@ -24,6 +29,12 @@ public static class ValidationBehaviorDependencyInjection
         services.AddScoped<IValidator<RevokeTokenCommand>, RevokeTokenCommandValidator>();
 
         services.AddScoped<IValidator<ConfirmEmailCommand>, ConfirmEmailCommandValidator>();
+
+        services.AddScoped<IValidator<UploadFileCommand>, UploadFileCommandValidator>();
+        services.AddScoped<IValidator<GetFileInfoQuery>, GetFileInfoQueryValidator>();
+        services.AddScoped<IValidator<GetFileQuery>, GetFileQueryValidator>();
+        services.AddScoped<IValidator<DeleteFileCommand>, DeleteFileCommandValidator>();
+        services.AddScoped<IValidator<GetFileMarksQuery>, GetFileMarksQueryValidator>();
 
         return services;
     }

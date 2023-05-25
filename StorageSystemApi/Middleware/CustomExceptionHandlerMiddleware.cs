@@ -70,6 +70,10 @@ public class CustomExceptionHandlerMiddleware
             case WrongConfirmationCodeException:
                 code = HttpStatusCode.BadRequest;
                 break;
+
+            case IllegalOperationException:
+                code = HttpStatusCode.Forbidden;
+                break;
         }
 
         context.Response.ContentType = "application/json";
