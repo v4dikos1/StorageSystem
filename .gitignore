@@ -358,3 +358,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/StorageSystemApi/OptionsSetup/credentials
+/StorageSystemApi/OptionsSetup/config.txt
