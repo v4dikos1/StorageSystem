@@ -69,7 +69,7 @@ After cloning the repository, you will need to configure the appsetting.json fil
   },
   "Aws": {
     "ServiceURL": "https://s3.yandexcloud.net",
-    "aws_access_key_id": "your_access_key_id,
+    "aws_access_key_id": "your_access_key_id",
     "aws_secret_access_key": "your_secret_access_key",
     "region": "ru-central1"
   },
