@@ -24,7 +24,7 @@ After installing the application, open the Swagger file to view the definition o
 ### Docker
 To pull a docker image, run the following command:
 ```
-docker pull v4dikos/storagesystemapi:test
+docker pull v4dikos/storagesystemapi:latest
 ```
 
 ### Docker-compose
@@ -34,7 +34,7 @@ docker-compose up -d
 ```
 You may have to run the following commands to configure the certificate:
 ```
-dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p { password here }
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p 65798732
 dotnet dev-certs https --trust
 ```
 
@@ -68,7 +68,10 @@ After cloning the repository, you will need to configure the appsetting.json fil
     "ReceiptLink": "your_link_for_documents_return"
   },
   "Aws": {
-    "ServiceURL": "provider_url_of_s3_storage"
+    "ServiceURL": "https://s3.yandexcloud.net",
+    "aws_access_key_id": "your_access_key_id,
+    "aws_secret_access_key": "your_secret_access_key",
+    "region": "ru-central1"
   },
   "AllowedHosts": "*"
 }
