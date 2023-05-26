@@ -24,7 +24,7 @@ After installing the application, open the Swagger file to view the definition o
 ### Docker
 To pull a docker image, run the following command:
 ```
-docker pull v4dikos/storagesystemapi:latest
+docker pull v4dikos/storagesystemapi:test
 ```
 
 ### Docker-compose
