@@ -1,0 +1,45 @@
+version: '3.9'
+
+networks:
+  Storage-network:
+    driver: bridge
+
+services:
+  storage-system:
+    depends_on: 
+      - db
+    container_name: StorageSystemContainer
+    image: v4dikos/storagesystemapi:latest
+    ports:
+      - "8000:80"
+      - "8001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=65798732
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - Storage-network
+
+
+  db:
+    image: postgres:latest
+    container_name: Database
+    ports: 
+      - 5431:5432
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 65798732
+      POSTGRES_DB: StorageSystemDb
+
+    networks:
+      - Storage-network
+volumes:
+  pgdata:

@@ -1,10 +1,8 @@
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text.Json.Serialization;
 using Application;
 using Application.Common.Abstractions;
 using Application.Common.Mapping;
-using FluentValidation;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
