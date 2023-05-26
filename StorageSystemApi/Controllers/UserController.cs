@@ -112,6 +112,27 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
+    /// Get the authorized user
+    /// </summary>
+    /// <returns>Returns user view model (UserProfileVm)</returns>
+    /// <response code="200">User found</response>
+    /// <response code="404">User not found</response>
+    [HttpGet("{id}", Name = "GetAuthorizedUser")]
+    [Authorize]
+    [ProducesResponseType(typeof(UserProfileVm), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<UserProfileVm>> GetUser()
+    {
+        var userId = Guid.Parse(User.Claims.First(c => c.Type is ClaimTypes.NameIdentifier).Value);
+
+        var query = new GetUserProfileQuery(userId);
+
+        var response = await _mediator.Send(query);
+
+        return Ok(response);
+    }
+
+    /// <summary>
     /// Verify the email
     /// </summary>
     /// <param name="verificationToken">Token sent in the email</param>
