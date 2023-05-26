@@ -11,26 +11,16 @@ internal class DeleteFileCommandHandler : IRequestHandler<DeleteFileCommand>
     private readonly IFileRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFileService _fileService;
-    private readonly IValidator<DeleteFileCommand> _validator;
 
-    public DeleteFileCommandHandler(IFileRepository repository, IUnitOfWork unitOfWork, IFileService fileService, IValidator<DeleteFileCommand> validator)
+    public DeleteFileCommandHandler(IFileRepository repository, IUnitOfWork unitOfWork, IFileService fileService)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
         _fileService = fileService;
-        _validator = validator;
     }
 
     public async Task Handle(DeleteFileCommand request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         // checking if the file exists
         var file = await _repository.GetFileAsync(request.Id);
 

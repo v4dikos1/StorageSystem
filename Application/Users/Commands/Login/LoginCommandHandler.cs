@@ -12,31 +12,21 @@ internal class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
     private readonly ITokenService _tokenService;
-    private readonly IValidator<LoginCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
 
     public LoginCommandHandler(IUserRepository userRepository,
         IPasswordService passwordService,
         ITokenService tokenService,
-        IValidator<LoginCommand> validator, IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _passwordService = passwordService;
         _tokenService = tokenService;
-        _validator = validator;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<LoginResponseVm> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         // Searching for a user by email
         var user = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
 

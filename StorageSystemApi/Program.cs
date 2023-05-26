@@ -1,8 +1,10 @@
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text.Json.Serialization;
 using Application;
 using Application.Common.Abstractions;
 using Application.Common.Mapping;
+using FluentValidation;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -45,7 +47,6 @@ builder.Services.ConfigureOptions<EmailOptionsSetup>();
 
 builder.Services.ConfigureOptions<StorageOptionsSetup>();
 
-builder.Services.AddValidation();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure();

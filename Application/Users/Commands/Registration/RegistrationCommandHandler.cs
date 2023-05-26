@@ -12,7 +12,6 @@ internal class RegistrationCommandHandler : IRequestHandler<RegistrationCommand,
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
     private readonly IEmailService _emailService;
-    private readonly IValidator<RegistrationCommand> _validator;
     private readonly IVerificationService _verificationService;
 
 
@@ -21,26 +20,17 @@ internal class RegistrationCommandHandler : IRequestHandler<RegistrationCommand,
         IUserRepository userRepository,
         IPasswordService passwordService,
         IEmailService emailService,
-        IValidator<RegistrationCommand> validator, IVerificationService verificationService)
+        IVerificationService verificationService)
     {
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
         _passwordService = passwordService;
         _emailService = emailService;
-        _validator = validator;
         _verificationService = verificationService;
     }
 
     public async Task<Guid> Handle(RegistrationCommand request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         // Check if a user with the same email already exists
         if (await _userRepository.GetUserByEmailAsync(request.Email.Value, cancellationToken) is not null)
         {

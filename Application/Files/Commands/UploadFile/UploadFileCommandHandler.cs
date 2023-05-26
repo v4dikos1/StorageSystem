@@ -14,33 +14,23 @@ internal class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, Gui
     private readonly IFileRepository _fileRepository;
     private readonly IFileService _fileService;
     private readonly FileStorageOptions _fileStorageOptions;
-    private readonly IValidator<UploadFileCommand> _validator;
 
     public UploadFileCommandHandler(IUserRepository userRepository,
         IUnitOfWork unitOfWork,
         IFileService fileService,
         IFileRepository fileRepository,
-        IOptions<FileStorageOptions> fileStorageOptions, IValidator<UploadFileCommand> validator)
+        IOptions<FileStorageOptions> fileStorageOptions)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _fileService = fileService;
         _fileRepository = fileRepository;
-        _validator = validator;
         _fileStorageOptions = fileStorageOptions.Value;
 
     }
 
     public async Task<Guid> Handle(UploadFileCommand request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         // if file creator exists
         var creator = await _userRepository.GetUserByIdAsync(request.CreatorId, cancellationToken);
 

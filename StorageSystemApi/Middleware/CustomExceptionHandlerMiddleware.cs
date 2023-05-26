@@ -74,6 +74,10 @@ public class CustomExceptionHandlerMiddleware
             case IllegalOperationException:
                 code = HttpStatusCode.Forbidden;
                 break;
+
+            case ArgumentException:
+                code = HttpStatusCode.BadRequest;
+                break;
         }
 
         context.Response.ContentType = "application/json";

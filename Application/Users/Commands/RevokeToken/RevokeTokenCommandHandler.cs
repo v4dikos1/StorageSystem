@@ -10,25 +10,15 @@ internal class RevokeTokenCommandHandler : IRequestHandler<RevokeTokenCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IValidator<RevokeTokenCommand> _validator;
 
-    public RevokeTokenCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IValidator<RevokeTokenCommand> validator)
+    public RevokeTokenCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _validator = validator;
     }
 
     public async Task Handle(RevokeTokenCommand request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         // Searching for the user
         var user = await _userRepository.GetUserByIdAsync(request.Id, cancellationToken);
 

@@ -14,26 +14,16 @@ internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand,
     private readonly ITokenService _tokenService;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IValidator<RefreshTokenCommand> _validator;
 
-    public RefreshTokenCommandHandler(ITokenService tokenService, IUserRepository userRepository, IUnitOfWork unitOfWork, IValidator<RefreshTokenCommand> validator)
+    public RefreshTokenCommandHandler(ITokenService tokenService, IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _tokenService = tokenService;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _validator = validator;
     }
 
     public async Task<LoginResponseVm> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         // Getting principal from token
         var principal = _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
 

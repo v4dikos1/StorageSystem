@@ -10,26 +10,16 @@ internal class GetFileQueryHandler : IRequestHandler<GetFileQuery, FileResponse>
     private readonly IFileRepository _fileRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFileService _fileService;
-    private readonly IValidator<GetFileQuery> _validator;
 
-    public GetFileQueryHandler(IFileRepository fileRepository, IUnitOfWork unitOfWork, IFileService fileService, IValidator<GetFileQuery> validator)
+    public GetFileQueryHandler(IFileRepository fileRepository, IUnitOfWork unitOfWork, IFileService fileService)
     {
         _fileRepository = fileRepository;
         _unitOfWork = unitOfWork;
         _fileService = fileService;
-        _validator = validator;
     }
 
     public async Task<FileResponse> Handle(GetFileQuery request, CancellationToken cancellationToken)
     {
-        // Validating data in the command
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
         var fileInfo = await _fileRepository.GetFileAsync(request.FileId);
 
         // if the file exists

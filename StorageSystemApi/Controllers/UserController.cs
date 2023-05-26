@@ -136,7 +136,7 @@ public class UserController : ControllerBase
     /// </summary>
     /// <remarks>
     /// Request example:
-    /// GET /api/1.0/users/documents?offset=5&amp;limit=10
+    /// GET /api/1.0/users/files?offset=5&amp;limit=10
     /// </remarks>
     /// <param name="offset">Offset from the beginning</param>
     /// <param name="limit">files limit</param>
