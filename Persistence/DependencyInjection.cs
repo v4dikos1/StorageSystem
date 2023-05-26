@@ -1,5 +1,5 @@
-﻿using Amazon.S3;
-using Amazon.SQS;
+﻿using Amazon.Runtime;
+using Amazon.S3;
 using Application.Common.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,9 +30,10 @@ public static class DependencyInjection
 
         services.AddScoped<IFileService, FileService>();
 
-        services.AddDefaultAWSOptions(configuration.GetAWSOptions("AWS"));
+        var awsOptions = configuration.GetAWSOptions("Aws");
+        awsOptions.Credentials = new BasicAWSCredentials(configuration["Aws:aws_access_key_id"], configuration["Aws:aws_secret_access_key"]);
+        services.AddDefaultAWSOptions(awsOptions);
         services.AddAWSService<IAmazonS3>();
-        services.AddAWSService<IAmazonSQS>();
 
         return services;
     }
