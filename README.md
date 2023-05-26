@@ -29,7 +29,7 @@ docker pull v4dikos/storagesystemapi:latest
 
 ### Docker-compose
 In order to run the application, run the following command (must be in the same directory as the docker-compose.yml file):
-```docker
+```
 docker-compose up -d
 ```
 You may have to run the following commands to configure the certificate:
