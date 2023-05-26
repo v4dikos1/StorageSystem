@@ -4,7 +4,7 @@ using File = Application.Models.File;
 
 namespace Persistence.Repositories;
 
-public class FileRepository : IFileRepository
+internal sealed class FileRepository : IFileRepository
 {
     private readonly IApplicationDbContext _dbContext;
 

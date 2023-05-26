@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace Infrastructure.Authentication;
 
-public class PasswordService : IPasswordService
+internal class PasswordService : IPasswordService
 {
     public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {

@@ -4,11 +4,11 @@
 /// Model for storing jwt options.
 /// Properties are initialized in the appsetting.json file or elsewhere.
 /// </summary>
-public class JwtOptions
+public record JwtOptions
 {
-    public string Issuer { get; init; }
+    public required string Issuer { get; init; }
 
-    public string Audience { get; init; }
+    public required string Audience { get; init; }
 
-    public string SecretKey { get; init; }
+    public required string SecretKey { get; init; }
 }

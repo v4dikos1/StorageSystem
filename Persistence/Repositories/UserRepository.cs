@@ -5,7 +5,7 @@ using User = Application.Models.User;
 
 namespace Persistence.Repositories;
 
-public sealed class UserRepository : IUserRepository
+internal sealed class UserRepository : IUserRepository
 {
     private readonly IApplicationDbContext _context;
 

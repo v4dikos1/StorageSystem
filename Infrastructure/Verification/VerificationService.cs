@@ -3,7 +3,7 @@ using Application.Common.Abstractions;
 
 namespace Infrastructure.Verification;
 
-public class VerificationService : IVerificationService
+internal class VerificationService : IVerificationService
 {
     /// <summary>
     /// Confirmation code generation

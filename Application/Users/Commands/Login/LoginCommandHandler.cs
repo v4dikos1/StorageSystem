@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Application.Common.Abstractions;
+﻿using Application.Common.Abstractions;
 using Application.Common.Exceptions;
 using Application.Models;
 using FluentValidation;
@@ -8,7 +7,7 @@ using System.Security.Claims;
 
 namespace Application.Users.Commands.Login;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseVm>
+internal class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseVm>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;

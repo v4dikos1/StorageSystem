@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Users.Queries.GetUserProfile;
 
-public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, UserProfileVm>
+internal class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, UserProfileVm>
 {
     private readonly IUserRepository _userRepository;
     private readonly IValidator<GetUserProfileQuery> _validator;

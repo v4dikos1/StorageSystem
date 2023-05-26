@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Authentication;
 
-public sealed class TokenService : ITokenService
+internal sealed class TokenService : ITokenService
 {
     private readonly JwtOptions _jwtOptions;
 

@@ -6,7 +6,7 @@ namespace Application.Common.Mapping;
 /// <summary>
 /// Automatic configuration of mappings from an assembly
 /// </summary>
-public class AssemblyMappingProfile : Profile
+internal class AssemblyMappingProfile : Profile
 {
     public AssemblyMappingProfile(Assembly assembly)
     {

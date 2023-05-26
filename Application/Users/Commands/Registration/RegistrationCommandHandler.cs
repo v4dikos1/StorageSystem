@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Users.Commands.Registration;
 
-public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, Guid>
+internal class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, Guid>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;

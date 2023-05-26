@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Users.Commands.RevokeToken;
 
-public class RevokeTokenCommandHandler : IRequestHandler<RevokeTokenCommand>
+internal class RevokeTokenCommandHandler : IRequestHandler<RevokeTokenCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;

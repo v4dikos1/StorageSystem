@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Users.Commands.RefreshToken;
 
-public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, LoginResponseVm>
+internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, LoginResponseVm>
 {
     private readonly ITokenService _tokenService;
     private readonly IUserRepository _userRepository;

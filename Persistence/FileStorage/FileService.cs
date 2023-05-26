@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Persistence.FileStorage;
 
-public class FileService : IFileService
+internal class FileService : IFileService
 {
     private readonly FileStorageOptions _options;
     private readonly IAmazonS3 _s3Client;

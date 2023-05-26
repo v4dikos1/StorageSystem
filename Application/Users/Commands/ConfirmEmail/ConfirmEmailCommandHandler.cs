@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Users.Commands.ConfirmEmail;
 
-public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand>
+internal class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;

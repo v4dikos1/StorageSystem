@@ -3,7 +3,7 @@
 /// <summary>
 /// Data class for the content of the information needed to send the letter
 /// </summary>
-public class EmailOptions
+public record EmailOptions
 {
     public required string ConfirmUrl { get; init; }
 

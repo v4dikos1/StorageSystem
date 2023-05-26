@@ -2,7 +2,7 @@
 
 namespace Application.Users.Commands.RefreshToken;
 
-public class RefreshTokenCommandValidator : AbstractValidator<RefreshTokenCommand>
+internal class RefreshTokenCommandValidator : AbstractValidator<RefreshTokenCommand>
 {
     public RefreshTokenCommandValidator()
     {
