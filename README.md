@@ -15,12 +15,30 @@ All files are stored in the cloud, which ensures their safety through distribute
 - YandexObjectStorage - Cloud storage used as s3 storage
 - Docker, Docker-compose - Containerization
 - AutoMapper - Mapping
-- ...
 
 ## Usage
 After installing the application, open the Swagger file to view the definition of all endpoints.
 
 ## Getting started
+
+### Docker
+To pull a docker image, run the following command:
+```
+docker pull v4dikos/storagesystemapi:test
+```
+
+### Docker-compose
+In order to run the application, run the following command (must be in the same directory as the docker-compose.yml file):
+```
+docker-compose up -d
+```
+You may have to run the following commands to configure the certificate:
+```
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p { password here }
+dotnet dev-certs https --trust
+```
+
+### Git
 To install the application, clone the git repository.
 After cloning the repository, you will need to configure the appsetting.json file.
 
@@ -75,8 +93,4 @@ The **s3StorageOptions** and **Aws** sections define the settings for s3 storage
 ```
   [default]
   region=ru-central1
-```
-To pull a docker image, run the following command:
-```
-docker pull ...
 ```
