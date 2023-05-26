@@ -68,10 +68,10 @@ After cloning the repository, you will need to configure the appsetting.json fil
     "ReceiptLink": "your_link_for_documents_return"
   },
   "Aws": {
-    "ServiceURL": "https://s3.yandexcloud.net",
+    "ServiceURL": "provider_url_of_s3_storage",
     "aws_access_key_id": "your_access_key_id",
     "aws_secret_access_key": "your_secret_access_key",
-    "region": "ru-central1"
+    "region": "region"
   },
   "AllowedHosts": "*"
 }
