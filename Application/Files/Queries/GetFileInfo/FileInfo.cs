@@ -1,11 +1,16 @@
-﻿using Domain.ValueObjects;
+﻿using Application.Common.Mapping;
+using AutoMapper;
+using Domain.ValueObjects;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using File = Application.Models.File;
 
 namespace Application.Files.Queries.GetFileInfo;
 
 /// <summary>
 /// A model that represents information about the file
 /// </summary>
-public class FileInfo
+public class FileInfo : IMapWith<File>
 {
     public Guid Id { get; set; }
 
@@ -19,4 +24,12 @@ public class FileInfo
     public required Guid OwnerId { get; set; }
 
     public bool ToAutoDelete { get; set; } = false;
+
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<File, FileInfo>()
+            .ForMember(f => f.Url, opt =>
+                opt.MapFrom((src, dest, destMember, context)
+                    => context.Items["ReceiptLink"] + src.Id.ToString()));
+    }
 }

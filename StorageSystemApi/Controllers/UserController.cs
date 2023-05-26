@@ -1,9 +1,12 @@
-﻿using Application.Users.Commands.ConfirmEmail;
+﻿using System.Security.Claims;
+using Application.Files.Queries.GetFiles;
+using Application.Users.Commands.ConfirmEmail;
 using Application.Users.Commands.Login;
 using Application.Users.Commands.Registration;
 using Application.Users.Queries.GetUserProfile;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StorageSystemApi.Models.UserModels;
 
@@ -126,5 +129,34 @@ public class UserController : ControllerBase
         await _mediator.Send(command);
 
         return NoContent();
+    }
+
+    /// <summary>
+    /// Get a list of files for an authorized user
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    /// GET /api/1.0/users/documents?offset=5&amp;limit=10
+    /// </remarks>
+    /// <param name="offset">Offset from the beginning</param>
+    /// <param name="limit">files limit</param>
+    /// <returns>file list</returns>
+    /// <response code="200"></response>
+    /// <resposne code="400">Validation errors</resposne>
+    /// <response code="401">Not authorized</response>
+    [HttpGet]
+    [Route("files")]
+    [Authorize]
+    [ProducesResponseType(typeof(FileListVm), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<FileListVm>> GetFiles(int offset, int limit)
+    {
+        var userId = Guid.Parse(User.Claims.First(c => c.Type is ClaimTypes.NameIdentifier).Value);
+
+        var query = new GetFilesQuery(userId, offset, limit);
+
+        var response = await _mediator.Send(query);
+
+        return Ok(response);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Abstractions;
 using Application.Common.Exceptions;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -11,11 +12,14 @@ internal class GetFileInfoQueryHandler : IRequestHandler<GetFileInfoQuery, FileI
     private readonly IFileRepository _fileRepository;
     private readonly FileStorageOptions _storageOptions;
     private readonly IValidator<GetFileInfoQuery> _validator;
+    private readonly IMapper _mapper;
 
-    public GetFileInfoQueryHandler(IFileRepository fileRepository, IOptions<FileStorageOptions> storageOptions, IValidator<GetFileInfoQuery> validator)
+    public GetFileInfoQueryHandler(IFileRepository fileRepository,
+        IOptions<FileStorageOptions> storageOptions, IValidator<GetFileInfoQuery> validator, IMapper mapper)
     {
         _fileRepository = fileRepository;
         _validator = validator;
+        _mapper = mapper;
         _storageOptions = storageOptions.Value;
     }
 
@@ -38,15 +42,7 @@ internal class GetFileInfoQueryHandler : IRequestHandler<GetFileInfoQuery, FileI
         }
 
         // mapping
-        return new FileInfo
-        {
-            Id = file.Id,
-            Name = file.Name,
-            Description = file.Description,
-            CreatedAt = file.CreatedAt,
-            OwnerId = file.OwnerId,
-            ToAutoDelete = file.ToAutoDelete,
-            Url = _storageOptions.ReceiptLink + file.Id
-        };
+        return _mapper.Map<Models.File, FileInfo>(file,
+            opt => opt.Items["ReceiptLink"] = _storageOptions.ReceiptLink);
     }
 }

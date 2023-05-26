@@ -1,6 +1,7 @@
 ﻿using Application.Common.Abstractions;
 using Application.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using File = Application.Models.File;
 using User = Application.Models.User;
 
 namespace Persistence.Repositories;
@@ -28,68 +29,6 @@ internal sealed class UserRepository : IUserRepository
         });
 
         return user.Entity;
-    }
-
-    public async Task<User> UpdateUsernameAsync(Guid userId, string username, CancellationToken cancellationToken)
-    {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
-
-        user.Username = username;
-
-        return user;
-    }
-
-    public async Task<User> UpdateEmailAsync(Guid userId, string email, CancellationToken cancellationToken)
-    {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
-
-        user.Email = email;
-
-        return user;
-    }
-
-    public async Task<User> UpdatePasswordAsync(Guid userId, byte[] passwordHash, byte[] passwordSalt, CancellationToken cancellationToken)
-    {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
-
-        user.PasswordHash = passwordHash;
-        user.PasswordSalt = passwordSalt;
-
-        return user;
-    }
-
-    public async Task<User> UpdateUserAsync(Guid userId, string username, string email, byte[] passwordHash, byte[] passwordSalt,
-        bool isEmailConfirmed, CancellationToken cancellationToken)
-    {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
-
-        if (user is null)
-        {
-            throw new NotFoundException(nameof(User), userId);
-        }
-
-        user.Username = username;
-        user.Email = email;
-        user.IsEmailConfirmed = isEmailConfirmed;
-        user.PasswordHash = passwordHash;
-        user.PasswordSalt = passwordSalt;
-
-        return user;
     }
 
     public async Task<User> ConfirmEmailAsync(string verificationToken, CancellationToken cancellationToken)
@@ -143,5 +82,21 @@ internal sealed class UserRepository : IUserRepository
         User? user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
         return user;
+    }
+
+    public async Task<List<File>> GetUserFilesAsync(Guid userId, int offset, int limit, CancellationToken cancellationToken)
+    {
+        var user = await _context.Users
+            .Include(u => u.UploadedFiles)
+            .Skip(offset)
+            .Take(limit)
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken: cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(nameof(User), userId);
+        }
+
+        return user.UploadedFiles;
     }
 }
