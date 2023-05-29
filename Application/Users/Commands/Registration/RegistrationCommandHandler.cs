@@ -1,7 +1,6 @@
 ﻿using Application.Common.Abstractions;
 using Application.Common.Exceptions;
 using Application.Models;
-using FluentValidation;
 using MediatR;
 
 namespace Application.Users.Commands.Registration;
@@ -58,4 +57,8 @@ internal class RegistrationCommandHandler : IRequestHandler<RegistrationCommand,
 
         return user.Id;
     }
+
+
+
+
 }

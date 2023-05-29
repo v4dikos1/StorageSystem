@@ -32,4 +32,23 @@ public class User : Entity
     /// Uploaded files
     /// </summary>
     public IReadOnlyCollection<File> Files => _files;
+
+    /// <summary>
+    /// Upload file
+    /// </summary>
+    /// <param name="file"></param>
+    public void AddFile(File file)
+    {
+        var fileExists = _files.FirstOrDefault(f => f.Id == file.Id);
+        if (fileExists is null)
+        {
+            _files.Add(file);
+        }
+    }
+
+    public void RemoveFile(Guid fileId)
+    {
+        var file = _files.First(f => f.Id == fileId);
+        _files.Remove(file);
+    }
 }

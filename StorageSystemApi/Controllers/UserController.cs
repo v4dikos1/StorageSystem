@@ -117,7 +117,7 @@ public class UserController : ControllerBase
     /// <returns>Returns user view model (UserProfileVm)</returns>
     /// <response code="200">User found</response>
     /// <response code="404">User not found</response>
-    [HttpGet("{id}", Name = "GetAuthorizedUser")]
+    [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(UserProfileVm), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
